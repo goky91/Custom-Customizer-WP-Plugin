@@ -19,10 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'C_CUSTOMIZER_DIR',  plugin_dir_path( __FILE__ ) );
 
-require_once ( C_CUSTOMIZER_DIR .     '\src\Helpers\custom-customizer-includes.php' );
+require_once ( C_CUSTOMIZER_DIR . '\src\Helpers\custom-customizer-includes.php' );
 
-new CustomCustomizerEnqueue();
 new CustomCustomizerAdminPageInit();
+new CustomCustomizerEnqueue();
+
 
 function initiate_custom_customizer ( ) {
 
@@ -83,3 +84,12 @@ function initiate_custom_customizer ( ) {
 
 add_action( 'plugins_loaded', 'initiate_custom_customizer');
 
+
+if( !function_exists("update_extra_post_info") ) {
+    function update_extra_post_info() {
+        update_option( 'custom-customizer-settings', 'custom_customizer_objects' );
+
+    }
+}
+
+add_action( 'admin_init', 'update_extra_post_info' );
