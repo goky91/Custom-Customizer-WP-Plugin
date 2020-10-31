@@ -1,10 +1,9 @@
 <?php
-
 /*
  * Plugin Name:       Custom Customizer
  * Plugin URI:        /
  * Description:       Quickly register wp customizer sections, settings and controllers that you can use for development.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Goran Spasojevic
  * Author URI:        https://www.linkedin.com/in/goran-s/
  * License:           GPL-2.0+
@@ -17,79 +16,48 @@ if ( ! defined( 'ABSPATH' ) ) {
     die;
 }
 
+/*
+ * Prepare dependencies
+ * */
 define( 'C_CUSTOMIZER_DIR',  plugin_dir_path( __FILE__ ) );
+require_once ( C_CUSTOMIZER_DIR . '\src\Traits\CustomizerSingletonTrait.php' );
+require_once ( C_CUSTOMIZER_DIR . '\src\Helpers\CustomCustomizerIncludes.php' );
 
-require_once ( C_CUSTOMIZER_DIR . '\src\Helpers\custom-customizer-includes.php' );
+/*
+ * Register custom option on plugin activation
+ * */
+function addCustomCustomizerOption() {
+    add_option( 'custom_customizer_options', [] );
+}
+register_activation_hook( __FILE__, 'addCustomCustomizerOption' );
 
-new CustomCustomizerAdminPageInit();
-new CustomCustomizerEnqueue();
+/*
+ * Clean up database from custom option on plugin removal
+ * */
+function removeCustomCustomizerOption() {
+    delete_option( 'custom_customizer_options' );
+}
+register_uninstall_hook(__FILE__, 'removeCustomCustomizerOption');
 
+/*
+ * Include all the necessary files
+ * */
+CustomCustomizerIncludes::getInstance();
 
+/*
+ * Initiate admin page for the plugin
+ * */
+CustomCustomizerAdminPageInit::getInstance();
+
+/*
+ * Enqueue scripts and styles for the admin page
+ * */
+CustomCustomizerEnqueue::getInstance();
+
+/*
+ * Initiate Custom Customizer plugin
+ * */
 function initiate_custom_customizer ( ) {
-
-
-    $customizerArgs = [
-        [
-            'class_name' => 'ImageUploadSettingBuilder',
-            'setting_name' => 'goran_setting',
-            'control_label' => 'Goran Label'
-        ],
-        [
-            'class_name' => 'ImageUploadSettingBuilder',
-            'setting_name' => 'goran_setting43',
-            'control_label' => 'Goran Label4343'
-        ],
-        [
-            'class_name' => 'ColorPickSettingBuilder',
-            'setting_name' => 'goran_setting2',
-            'control_label' => 'Goran Label2'
-        ],
-        [
-            'class_name' => 'TextInputSettingBuilder',
-            'setting_name' => 'goran_settingdsad',
-            'control_label' => 'Goran Labeldasdsad'
-        ],
-        [
-            'class_name' => 'CheckboxInputSettingBuilder',
-            'setting_name' => 'goran_settingdsaddsada',
-            'control_label' => 'Goran Labeldasdsdsadaad'
-        ],
-        [
-            'class_name' => 'SelectInputSettingBuilder',
-            'setting_name' => 'goran_settingdsaddsada',
-            'control_label' => 'Goran Labeldasdsdsadaad'
-        ],
-
-        [
-            'class_name' => 'RadioInputSettingBuilder',
-            'setting_name' => 'goran_settingsaddsaddsada',
-            'control_label' => 'Goran Labeldasdsdsadsdadaaad'
-        ],
-
-        [
-            'class_name' => 'TextAreaInputSettingBuilder',
-            'setting_name' => 'goran_settingsaddsaddsadssssa',
-            'control_label' => 'Goran Labeldasdsdsadsdadadddaad'
-        ],
-
-        [
-            'class_name' => 'MediaUploadSettingBuilder',
-            'setting_name' => 'goran_settingsaddsadsaddsadssssa',
-            'control_label' => 'Goran Labeldasdsdsadssdsadadadddaad'
-        ],
-    ];
-
-    new CustomCustomizerBuilder('goran', $customizerArgs);
+    CustomCustomizerBuilder::getInstance();
 }
-
 add_action( 'plugins_loaded', 'initiate_custom_customizer');
-
-
-if( !function_exists("update_extra_post_info") ) {
-    function update_extra_post_info() {
-        update_option( 'custom-customizer-settings', 'custom_customizer_objects' );
-
-    }
-}
-
-add_action( 'admin_init', 'update_extra_post_info' );
