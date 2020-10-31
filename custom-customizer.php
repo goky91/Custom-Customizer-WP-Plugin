@@ -20,6 +20,53 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'C_CUSTOMIZER_DIR',  plugin_dir_path( __FILE__ ) );
 
 require_once ( C_CUSTOMIZER_DIR . '\src\Helpers\custom-customizer-includes.php' );
+require_once ( C_CUSTOMIZER_DIR . '\src\Traits\CustomizerSingleton.php' );
+//require_once ( C_CUSTOMIZER_DIR . '\src\Controllers\CustomCustomizerSetup.php' );
+//CustomCustomizerSetup::getInstance();
+
+ function createDatabaseTable()
+{
+    /*
+     * Create a database table for our plugin
+     * */
+
+    $arr = $_POST;
+    array_shift( $arr );
+    array_chunk( $arr, 3 );
+    global $wpdb;
+
+    $tableName = $wpdb->prefix . 'c_customizer_settings';
+
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $tableName (
+      id mediumint(9) NOT NULL AUTO_INCREMENT,
+      name tinytext NOT NULL,
+      text text NOT NULL,
+      url varchar(55) DEFAULT '' NOT NULL,
+      PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+}
+
+
+ function databaseCleanup()
+{
+    global $wpdb;
+    $tableName = $wpdb->prefix . 'c_customizer_settings';
+
+    $sql = "DROP TABLE IF EXISTS wp_c_customizer_settings";
+    $wpdb->query($sql);
+    delete_option("my_plugin_db_version");
+
+}
+
+register_activation_hook( __FILE__, 'createDatabaseTable' );
+register_uninstall_hook( __FILE__, 'databaseCleanup' );
+
+
 
 new CustomCustomizerAdminPageInit();
 new CustomCustomizerEnqueue();

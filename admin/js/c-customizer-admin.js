@@ -2,7 +2,7 @@
 
 var customizerArgsJs = [];
 var addNewSectionBtn = document.querySelector('.primary');
-var container = document.getElementById('wpbody-content');
+var container = document.getElementById('custom-customizer-form');
 var counter = 0;
 
 var allClasses = [
@@ -65,6 +65,7 @@ function selectSetting ( object, row ) {
 
     var input = document.createElement('select');
     input.id = 'select-input-' + object.id;
+    input.name = 'select-name-' + object.id;
 
     allClasses.forEach( function ( singleClass ) {
         optionCounter++;
@@ -86,8 +87,10 @@ function enterName ( object, row ) {
     var input = document.createElement("input");
     input.id = 'name-input-' + object.id;
     input.type = 'text';
-    input.name = 'name';
-    input.placeholder = 'Enter name'
+    input.name = 'setting-name-' + object.id;
+    input.placeholder = 'Enter name';
+    input.required = true;
+
     row.appendChild(input);
 
     input.addEventListener('keyup', function () {
@@ -102,8 +105,10 @@ function enterLabel ( object, row ) {
     var input = document.createElement("input");
     input.id = 'label-input-' + counter;
     input.type = 'text';
-    input.name = 'name';
-    input.placeholder = 'Enter label'
+    input.name = 'label-name-' + object.id;
+    input.placeholder = 'Enter label';
+    input.required = true;
+
     row.appendChild(input);
 
     input.addEventListener('keyup', function () {
@@ -124,7 +129,6 @@ function horizontalLine ( row ) {
 }
 
 function removeFromArgs ( objectToRemove ) {
-    var valueToRemove = objectToRemove;
 
     customizerArgsJs = customizerArgsJs.filter( function ( item ) {
         return item !== objectToRemove
