@@ -1,18 +1,23 @@
 <?php
-
+/*
+ * Register and initiate Custom Customizer admin page.
+ * */
 
 class CustomCustomizerAdminPageInit
 {
 
-    public function __construct()
+    use CustomizerSingletonTrait;
+
+    public function __construct ()
     {
-        add_action('admin_menu', [ $this, 'c_customizer_setup_menu' ] );
+        add_action ( 'admin_menu', [ $this, 'c_customizer_setup_menu' ] );
 
     }
 
 
-    function c_customizer_setup_menu(){
-        add_menu_page(
+   public function c_customizer_setup_menu ()
+    {
+        add_menu_page (
             'Custom Customizer',
             'Build Customizer',
             'manage_options',
@@ -21,7 +26,8 @@ class CustomCustomizerAdminPageInit
         );
     }
 
-    function custom_customizer_admin_page_init (){
+   public function custom_customizer_admin_page_init ()
+    {
 
         $allClasses = [
             'ImageUploadSettingBuilder',
@@ -34,7 +40,7 @@ class CustomCustomizerAdminPageInit
             'MediaUploadSettingBuilder'
         ];
 
-        require_once (C_CUSTOMIZER_DIR . 'src/view/custom-customizer-admin.php');
+        require_once ( C_CUSTOMIZER_DIR . 'src/view/custom-customizer-admin.php' );
 
     }
 

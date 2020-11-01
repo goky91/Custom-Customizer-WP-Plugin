@@ -1,50 +1,48 @@
 <?php
-
+/*
+ * Register Custom Customizer section and instantiate all the classes received through array.
+ * Array with customizer arguments is saved in the wp_options table under "custom_customizer_options".
+ * */
 
 class CustomCustomizerBuilder
 {
-    public $sectionIdProp;
-    public $sectionsArray = [];
-    public $customizerArgs = [];
+    use CustomizerSingletonTrait;
 
-    public function __construct($sectionId, $customizerArgs)
+    public $sectionIdProp;
+    public $customizerArgs;
+
+    public function __construct ()
     {
-        $this->sectionIdProp = $sectionId;
-        $this->customizerArgs = $customizerArgs;
-        add_action('customize_register', [$this, 'checkIfSectionExists']);
+        $this->sectionIdProp  = 'custom_customizer';
+        $this->customizerArgs = get_option ( 'custom_customizer_options' );
+        add_action ( 'customize_register', [ $this, 'addCustomCustomizerSection' ] );
 
     }
 
-    public function checkIfSectionExists($wp_customize)
+    public function addCustomCustomizerSection ( $wp_customize )
     {
 
-        foreach ($wp_customize->sections() as $section_key => $section_object) {
-            array_push($this->sectionsArray, $section_key);
+        // Add New Section
+        $wp_customize->add_section
+        (
+            $this->sectionIdProp,
+            [
+                'title'    => 'Custom Customizer',
+                'priority' => 100
+            ]
+        );
+
+        // Instantiate each class from the model folder multiple times if needed
+        foreach ( $this->customizerArgs as $customizerArg ) {
+
+            $className   = isset( $customizerArg[ 0 ] ) ? $customizerArg[ 0 ] : "";
+            $settingName = isset( $customizerArg[ 1 ] ) ? $customizerArg[ 1 ] : "";
+            $label       = isset( $customizerArg[ 2 ] ) ? $customizerArg[ 2 ] : "";
+
+            new $className( $settingName, $label, $this->sectionIdProp, $wp_customize );
         }
 
-        if (in_array($this->sectionIdProp, $this->sectionsArray)) {
 
-            // Use Existing Section
-            foreach ($this->customizerArgs as $customizerArg) {
-                new $customizerArg['class_name']($customizerArg['setting_name'], $customizerArg['control_label'], $this->sectionIdProp, $wp_customize);
-            }
-
-        } else {
-            // Add New Section
-            $wp_customize->add_section
-            (
-                $this->sectionIdProp,
-                [
-                    'title' => 'Goranov Section',
-                    'priority' => 100
-                ]
-            );
-
-            foreach ($this->customizerArgs as $customizerArg) {
-                new $customizerArg['class_name']($customizerArg['setting_name'], $customizerArg['control_label'], $this->sectionIdProp, $wp_customize);
-            }
-
-        }
     }
 
 }
