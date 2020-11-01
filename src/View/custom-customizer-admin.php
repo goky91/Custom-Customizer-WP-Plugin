@@ -22,7 +22,7 @@ $optionsCount = count( $currentOptions );
                     </select>
                     <input id="name-input-<?php echo $counter ?>" value="<?php echo $customizerOption[1] ?>" type="text" name="setting-name-<?php echo $counter ?>" placeholder="Enter name" required>
                     <input id="label-input-<?php echo $counter ?>" value="<?php echo $customizerOption[2] ?>" type="text" name="label-name-<?php echo $counter ?>" placeholder="Enter label" required>
-                    <span id="endpoint-<?php echo $counter ?>"><pre>get_theme_mod(" <?php echo $customizerOption[1] ?> ");</pre></span><hr></div>
+                </div>
 
         <?php
                 $counter++;

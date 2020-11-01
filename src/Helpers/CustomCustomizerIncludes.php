@@ -15,7 +15,7 @@ class CustomCustomizerIncludes
         }
     }
 
-    public $allIncludes = [
+    private $allIncludes = [
                 '\src\Model\ImageUploadSettingBuilder.php',
                 '\src\Model\ColorPickSettingBuilder.php',
                 '\src\Model\TextInputSettingBuilder.php',

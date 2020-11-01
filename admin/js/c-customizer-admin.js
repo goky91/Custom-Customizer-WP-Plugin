@@ -36,8 +36,7 @@ function generateNew( object, row ) {
     selectSetting( object, row );
     enterName( object, row );
     enterLabel( object, row );
-    showEndpoint( object, row );
-    horizontalLine( row );
+    //showEndpoint( object, row );
 
     customizerArgsJs.push( object );
 
@@ -116,11 +115,6 @@ function showEndpoint ( object, row ) {
     string.id = 'endpoint-' + object.id;
     string.innerText = object.name;
     row.appendChild(string);
-}
-
-function horizontalLine ( row ) {
-    var hr = document.createElement('hr');
-    row.appendChild( hr );
 }
 
 function removeFromArgs ( objectToRemove ) {

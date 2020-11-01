@@ -15,7 +15,7 @@ class CustomCustomizerAdminPageInit
     }
 
 
-    function c_customizer_setup_menu ()
+   public function c_customizer_setup_menu ()
     {
         add_menu_page (
             'Custom Customizer',
@@ -26,7 +26,7 @@ class CustomCustomizerAdminPageInit
         );
     }
 
-    function custom_customizer_admin_page_init ()
+   public function custom_customizer_admin_page_init ()
     {
 
         $allClasses = [
