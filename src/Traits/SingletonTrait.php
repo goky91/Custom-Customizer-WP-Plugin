@@ -1,7 +1,12 @@
 <?php
 
+namespace CCustomizer\Traits;
 
-trait CustomizerSingletonTrait
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
+trait SingletonTrait
 {
     protected static $instance;
     final public static function getInstance()
