@@ -4,14 +4,14 @@ var container = document.getElementById('custom-customizer-form');
 var counter = container.dataset.counter;
 
 var allClasses = [
-    'ImageUploadSettingBuilder',
-    'ColorPickSettingBuilder',
-    'TextInputSettingBuilder',
-    'CheckboxInputSettingBuilder',
+    'ImageUploader',
+    'ColorPicker',
+    'TextInput',
+    'Checkbox',
     'SelectInputSettingBuilder',
     'RadioInputSettingBuilder',
-    'TextAreaInputSettingBuilder',
-    'MediaUploadSettingBuilder'
+    'TextArea',
+    'MediaUploader'
 ];
 
 addNewSectionBtn.addEventListener('click', function () {

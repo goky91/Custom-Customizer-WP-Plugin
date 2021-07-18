@@ -20,7 +20,7 @@ class MediaUploader extends Setting
     use SanitizerTrait;
 
 
-    public function init($uniqueID, $label, $sectionToUse)
+    public function start($uniqueID, $label, $sectionToUse)
     {
         $this->settingPrefix = "_media_uploader_input";
         $this->ID        = $uniqueID;

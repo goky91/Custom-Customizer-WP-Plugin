@@ -14,7 +14,7 @@ class Checkbox extends Setting
     use SingletonTrait;
 
 
-    public function init($uniqueID, $label, $sectionToUse)
+    public function start($uniqueID, $label, $sectionToUse)
     {
         $this->settingPrefix = "_checkbox_input";
         $this->ID        = $uniqueID;
