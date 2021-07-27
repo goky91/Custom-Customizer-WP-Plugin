@@ -19,6 +19,7 @@ if (!defined('ABSPATH')) {
 require 'vendor/autoload.php';
 
 use CCustomizer\Controllers\CustomCustomizerAdminPageInit;
+use CCustomizer\Controllers\SaveCustomSettings;
 use CCustomizer\Helpers\CustomCustomizerEnqueue;
 use CCustomizer\Controllers\CustomCustomizerBuilder;
 
@@ -48,15 +49,6 @@ register_uninstall_hook(__FILE__, 'removeCustomCustomizerOption');
 
 
 new CustomCustomizerAdminPageInit();
+new SaveCustomSettings();
 new CustomCustomizerEnqueue();
 new CustomCustomizerBuilder();
-
-
-/*
- * Initiate Custom Customizer plugin
- * */
-function initiate_custom_customizer()
-{
-    //CustomCustomizerBuilder::getInstance();
-}
-add_action('plugins_loaded', 'initiate_custom_customizer');
