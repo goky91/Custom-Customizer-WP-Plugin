@@ -33,18 +33,6 @@ class CustomCustomizerAdminPageInit
 
     public function ccAdminPage()
     {
-        var_dump(get_option('custom_customizer_options'));
-        $allSettings = [
-            'ImageUploader',
-            'ColorPicker',
-            'TextInput',
-            'Checkbox',
-            'SelectInputSettingBuilder',
-            'RadioInputSettingBuilder',
-            'TextArea',
-            'MediaUploader'
-        ];
-
         include_once(C_CUSTOMIZER_PATH . '/templates/custom-customizer-admin.php');
     }
 }

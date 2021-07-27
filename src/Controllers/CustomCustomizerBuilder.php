@@ -21,6 +21,7 @@ class CustomCustomizerBuilder
     {
         $this->sectionIdProp  = 'custom_customizer';
         $this->customizerArgs = get_option('custom_customizer_options');
+        
         add_action('customize_register', [$this, 'addCustomCustomizerSection']);
     }
 
