@@ -14,7 +14,7 @@ class ColorPicker extends Setting
 {
     use SingletonTrait;
 
-    protected const SETTING_PREFIX = '_color_pick';
+    const SETTING_PREFIX = '_color_pick';
 
 
     protected function buildSetting($wp_customize)

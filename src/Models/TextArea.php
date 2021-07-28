@@ -13,7 +13,7 @@ class TextArea extends Setting
 {
     use SingletonTrait;
     
-    protected const SETTING_PREFIX = '_textarea_input';
+    const SETTING_PREFIX = '_textarea_input';
 
 
     protected function buildSetting($wp_customize)

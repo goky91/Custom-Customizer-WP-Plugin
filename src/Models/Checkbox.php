@@ -13,7 +13,7 @@ class Checkbox extends Setting
 {
     use SingletonTrait;
 
-    protected const SETTING_PREFIX = '_checkbox_input';
+    const SETTING_PREFIX = '_checkbox_input';
 
 
     public function buildControl($wp_customize)

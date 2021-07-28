@@ -12,7 +12,7 @@ abstract class Setting
     /**
      *  @var SETTING_PREFIX [string]
      */
-    protected const SETTING_PREFIX = '';
+    const SETTING_PREFIX = '';
 
     /**
      *  @var $ID [string]
@@ -48,7 +48,7 @@ abstract class Setting
         $this->label = $label;
         $this->sectionToUse = $sectionToUse;
 
-        $this->buildIDs($this->ID, self::SETTING_PREFIX);
+        $this->buildIDs($this->ID, static::SETTING_PREFIX);
         $this->buildSetting($wp_customize);
         $this->buildControl($wp_customize);
     }
@@ -56,8 +56,8 @@ abstract class Setting
 
     final protected function buildIDs($uniqueID, $settingPrefix)
     {
-        $this->settingID = $uniqueID . self::SETTING_PREFIX . '_setting';
-        $this->controlID = $uniqueID . self::SETTING_PREFIX . '_control';
+        $this->settingID = $uniqueID . static::SETTING_PREFIX . '_setting';
+        $this->controlID = $uniqueID . static::SETTING_PREFIX . '_control';
     }
 
 

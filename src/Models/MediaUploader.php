@@ -19,7 +19,7 @@ class MediaUploader extends Setting
     use SingletonTrait;
     use SanitizerTrait;
 
-    protected const SETTING_PREFIX = '_media_upload';
+    const SETTING_PREFIX = '_media_upload';
 
 
     protected function buildSetting($wp_customize)

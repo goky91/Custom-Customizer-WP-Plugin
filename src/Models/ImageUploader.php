@@ -16,7 +16,7 @@ class ImageUploader extends Setting
     use SingletonTrait;
     use SanitizerTrait;
 
-    protected const SETTING_PREFIX = '_image_upload';
+    const SETTING_PREFIX = '_image_upload';
 
 
     protected function buildSetting($wp_customize)

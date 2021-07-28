@@ -13,7 +13,7 @@ class TextInput extends Setting
 {
     use SingletonTrait;
 
-    protected const SETTING_PREFIX = '_text_input';
+    const SETTING_PREFIX = '_text_input';
 
 
     protected function buildSetting($wp_customize)
