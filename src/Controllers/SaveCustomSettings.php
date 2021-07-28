@@ -20,12 +20,9 @@ class SaveCustomSettings
 
     function saveCustomizerSettings()
     {
-
-        if(!$_POST['savedData']) {
+        if (!$_POST['savedData']) {
             wp_die();
         }
-
-        var_dump($_POST['savedData']);
 
         update_option('custom_customizer_options', $_POST['savedData'], true);
         wp_die();

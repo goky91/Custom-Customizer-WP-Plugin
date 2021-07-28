@@ -14,16 +14,7 @@ class ColorPicker extends Setting
 {
     use SingletonTrait;
 
-
-    public function start($uniqueID, $label, $sectionToUse)
-    {
-        $this->settingPrefix = "_color_picker_input";
-        $this->ID        = $uniqueID;
-        $this->label     = $label;
-        $this->sectionToUse = $sectionToUse;
-
-        $this->renderCustomizerSetting($uniqueID, $label, $sectionToUse);
-    }
+    protected const SETTING_PREFIX = '_color_pick';
 
 
     protected function buildSetting($wp_customize)

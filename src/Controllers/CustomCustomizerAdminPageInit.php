@@ -12,7 +12,6 @@ if (!defined('ABSPATH')) {
 
 class CustomCustomizerAdminPageInit
 {
-
     public function __construct()
     {
         add_action('admin_menu', [$this, 'customCustomizerAdminInit']);

@@ -12,17 +12,8 @@ use CCustomizer\Traits\SingletonTrait;
 class TextArea extends Setting
 {
     use SingletonTrait;
-
-
-    public function start($uniqueID, $label, $sectionToUse)
-    {
-        $this->settingPrefix = "_textarea_input";
-        $this->ID        = $uniqueID;
-        $this->label     = $label;
-        $this->sectionToUse = $sectionToUse;
-
-        $this->renderCustomizerSetting($uniqueID, $label, $sectionToUse);
-    }
+    
+    protected const SETTING_PREFIX = '_textarea_input';
 
 
     protected function buildSetting($wp_customize)
@@ -39,7 +30,7 @@ class TextArea extends Setting
     }
 
 
-    public function buildControl($wp_customize)
+    protected function buildControl($wp_customize)
     {
         $wp_customize->add_control(
             $this->settingID,

@@ -13,16 +13,7 @@ class TextInput extends Setting
 {
     use SingletonTrait;
 
-
-    public function start($uniqueID, $label, $sectionToUse)
-    {
-        $this->settingPrefix = "_text_input";
-        $this->ID        = $uniqueID;
-        $this->label     = $label;
-        $this->sectionToUse = $sectionToUse;
-
-        $this->renderCustomizerSetting($uniqueID, $label, $sectionToUse);
-    }
+    protected const SETTING_PREFIX = '_text_input';
 
 
     protected function buildSetting($wp_customize)

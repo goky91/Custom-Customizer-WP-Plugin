@@ -13,7 +13,15 @@ if (!defined('ABSPATH')) {
 
 class CustomCustomizerBuilder
 {
+
+    /**
+     * @var $sectionIdProp string
+     */
     public $sectionIdProp;
+
+    /**
+     * @var $customizerArgs array
+     */
     public $customizerArgs;
 
 
@@ -21,7 +29,7 @@ class CustomCustomizerBuilder
     {
         $this->sectionIdProp  = 'custom_customizer';
         $this->customizerArgs = get_option('custom_customizer_options');
-        
+
         add_action('customize_register', [$this, 'addCustomCustomizerSection']);
     }
 
@@ -33,7 +41,7 @@ class CustomCustomizerBuilder
         $wp_customize->add_section(
             $this->sectionIdProp,
             [
-                'title'    => 'Custom Customizer',
+                'title'    => 'Custom Customizer Fields',
                 'priority' => 100
             ]
         );
@@ -42,9 +50,9 @@ class CustomCustomizerBuilder
         // Instantiate each class from the model folder multiple times if needed
         foreach ($this->customizerArgs as $customizerArg) {
 
-            $className   = isset($customizerArg[0]) ? $customizerArg[0] : "";
-            $settingName = isset($customizerArg[1]) ? $customizerArg[1] : "";
-            $label       = isset($customizerArg[2]) ? $customizerArg[2] : "";
+            $className   = $customizerArg[0] ?? "";
+            $settingUniqueName = $customizerArg[1] ?? "";
+            $label       = $customizerArg[2] ?? "";
 
             $settingCLass = "\CCustomizer\Models\\" .  $className;
 
@@ -52,7 +60,7 @@ class CustomCustomizerBuilder
                 return;
             }
 
-            $settingCLass::getInstance()->start($settingName, $label, $this->sectionIdProp);
+            $settingCLass::getInstance()->render($settingUniqueName, $label, $this->sectionIdProp);
         }
     }
 }

@@ -3,18 +3,15 @@ var addNewSectionBtn = document.querySelector('.primary');
 var container = document.getElementById('custom-customizer-form');
 var counter = container.dataset.counter;
 
-var saveWithAjax;
-
 var allClasses = [
     'ImageUploader',
     'ColorPicker',
     'TextInput',
     'Checkbox',
-    'SelectInputSettingBuilder',
-    'RadioInputSettingBuilder',
     'TextArea',
     'MediaUploader'
 ];
+
 
 addNewSectionBtn.addEventListener('click', function () {
 
@@ -47,6 +44,7 @@ function generateNew(object, row) {
     container.prepend(row);
 }
 
+
 function deleteSetting(object, row) {
     var x = document.createElement('span');
     x.id = 'delete-' + object.id;
@@ -57,6 +55,7 @@ function deleteSetting(object, row) {
     });
     row.appendChild(x);
 }
+
 
 function selectSetting(object, row) {
     var optionCounter = 0;
@@ -83,6 +82,7 @@ function selectSetting(object, row) {
     row.appendChild(input);
 }
 
+
 function enterName(object, row) {
     var input = document.createElement("input");
 
@@ -94,14 +94,8 @@ function enterName(object, row) {
     input.required = true;
 
     row.appendChild(input);
-
-    input.addEventListener('keyup', function () {
-        var endpointName = document.getElementById('endpoint-' + object.id);
-
-        object.name = input.value;
-        endpointName.innerText = 'get_theme_mod( \' ' + input.value + ' \' )';
-    })
 }
+
 
 function enterLabel(object, row) {
     var input = document.createElement("input");
@@ -120,12 +114,6 @@ function enterLabel(object, row) {
     })
 }
 
-function showEndpoint(object, row) {
-    var string = document.createElement("code");
-    string.id = 'endpoint-' + object.id;
-    string.innerText = object.name;
-    row.appendChild(string);
-}
 
 function removeFromArgs(objectToRemove) {
 
@@ -133,6 +121,7 @@ function removeFromArgs(objectToRemove) {
         return item !== objectToRemove
     })
 }
+
 
 /*delete existing rows*/
 var deleteBtns = document.querySelectorAll('span[id*="delete"]');
@@ -143,12 +132,15 @@ deleteBtns.forEach(function (btn) {
 });
 
 
-saveWithAjax = function () {
+/**
+ * Save plugin settings with AJAX.
+*/
+(function () {
 
     var dataArr = [];
 
-    var collectRows = function() {
-        jQuery('.cc-rows').each(function(i) {
+    var collectRows = function () {
+        jQuery('.cc-rows').each(function () {
             dataArr.push(
                 [
                     jQuery(this).children('.cc-rows__select').find(":selected").text(),
@@ -158,9 +150,6 @@ saveWithAjax = function () {
             );
         });
     }
-
-    console.log(dataArr);
-
 
     jQuery('#submit').click(function (e) {
         e.preventDefault();
@@ -172,11 +161,9 @@ saveWithAjax = function () {
             dataType: "html",
             data: {
                 action: 'save_ccustomizer_settings',
-                savedData : dataArr
+                savedData: dataArr
             }
         });
 
     });
-};
-
-saveWithAjax();
+})();

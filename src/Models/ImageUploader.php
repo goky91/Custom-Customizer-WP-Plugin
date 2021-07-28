@@ -16,16 +16,7 @@ class ImageUploader extends Setting
     use SingletonTrait;
     use SanitizerTrait;
 
-
-    public function start($uniqueID, $label, $sectionToUse)
-    {
-        $this->settingPrefix = "_image_uploader_input";
-        $this->ID        = $uniqueID;
-        $this->label     = $label;
-        $this->sectionToUse = $sectionToUse;
-
-        $this->renderCustomizerSetting($uniqueID, $label, $sectionToUse);
-    }
+    protected const SETTING_PREFIX = '_image_upload';
 
 
     protected function buildSetting($wp_customize)

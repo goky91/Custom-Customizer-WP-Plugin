@@ -3,21 +3,52 @@
 
 namespace CCustomizer\Models;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
 abstract class Setting
 {
-    protected $settingPrefix;
+    /**
+     *  @var SETTING_PREFIX [string]
+     */
+    protected const SETTING_PREFIX = '';
+
+    /**
+     *  @var $ID [string]
+     */
+    protected $ID;
+
+    /**
+     *  @var $label [string]
+     */
+    protected $label;
+
+    /**
+     *  @var $sectionToUse [string]
+     */
+    protected $sectionToUse;
+
+    /**
+     * @var $settingID [string]
+     */
     protected $settingID;
+
+    /**
+     * @var $controlID [string]
+     */
     protected $controlID;
 
 
-    final protected function renderCustomizerSetting($uniqueID, $label, $sectionToUse) {
+    final public function render($uniqueName, $label, $sectionToUse)
+    {
         global $wp_customize;
 
-        $this->buildIDs($uniqueID, $this->settingPrefix);
+        $this->ID = $uniqueName;
+        $this->label = $label;
+        $this->sectionToUse = $sectionToUse;
+
+        $this->buildIDs($this->ID, self::SETTING_PREFIX);
         $this->buildSetting($wp_customize);
         $this->buildControl($wp_customize);
     }
@@ -25,12 +56,13 @@ abstract class Setting
 
     final protected function buildIDs($uniqueID, $settingPrefix)
     {
-        $this->settingID = $uniqueID . $settingPrefix . '_setting';
-        $this->controlID = $uniqueID . $settingPrefix . '_control';
+        $this->settingID = $uniqueID . self::SETTING_PREFIX . '_setting';
+        $this->controlID = $uniqueID . self::SETTING_PREFIX . '_control';
     }
-    
 
-    protected function buildSetting($wp_customize) {
+
+    protected function buildSetting($wp_customize)
+    {
         $wp_customize->add_setting(
             $this->settingID,
             [
@@ -40,6 +72,6 @@ abstract class Setting
         );
     }
 
-    
+
     abstract protected function buildControl($wp_customize);
 }
