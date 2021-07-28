@@ -3,45 +3,35 @@
  * Register and initiate Custom Customizer admin page.
  * */
 
+namespace CCustomizer\Controllers;
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
+
 class CustomCustomizerAdminPageInit
 {
-
-    use CustomizerSingletonTrait;
-
-    public function __construct ()
+    public function __construct()
     {
-        add_action ( 'admin_menu', [ $this, 'c_customizer_setup_menu' ] );
-
+        add_action('admin_menu', [$this, 'customCustomizerAdminInit']);
     }
 
 
-   public function c_customizer_setup_menu ()
+    public function customCustomizerAdminInit()
     {
-        add_menu_page (
+        add_menu_page(
             'Custom Customizer',
             'Build Customizer',
             'manage_options',
             'custom-customizer-menu',
-            [ $this, "custom_customizer_admin_page_init" ]
+            [$this, "ccAdminPage"]
         );
     }
 
-   public function custom_customizer_admin_page_init ()
+
+    public function ccAdminPage()
     {
-
-        $allClasses = [
-            'ImageUploadSettingBuilder',
-            'ColorPickSettingBuilder',
-            'TextInputSettingBuilder',
-            'CheckboxInputSettingBuilder',
-            'SelectInputSettingBuilder',
-            'RadioInputSettingBuilder',
-            'TextAreaInputSettingBuilder',
-            'MediaUploadSettingBuilder'
-        ];
-
-        require_once ( C_CUSTOMIZER_DIR . 'src/view/custom-customizer-admin.php' );
-
+        include_once(C_CUSTOMIZER_PATH . '/templates/custom-customizer-admin.php');
     }
-
 }

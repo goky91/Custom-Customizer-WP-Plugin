@@ -3,7 +3,7 @@
  * Plugin Name:       Custom Customizer
  * Plugin URI:        /
  * Description:       Quickly register wp customizer sections, settings and controllers that you can use for development.
- * Version:           1.0.1
+ * Version:           1.2.0
  * Author:            Goran Spasojevic
  * Author URI:        https://www.linkedin.com/in/goran-s/
  * License:           GPL-2.0+
@@ -12,56 +12,43 @@
  * Domain Path:       /languages
 */
 
-if (!defined ( 'ABSPATH' )) {
+if (!defined('ABSPATH')) {
     die;
 }
 
-/*
- * Prepare dependencies
- * */
-define ( 'C_CUSTOMIZER_DIR' , plugin_dir_path ( __FILE__ ) );
-require_once ( C_CUSTOMIZER_DIR . '\src\Traits\CustomizerSingletonTrait.php' );
-require_once ( C_CUSTOMIZER_DIR . '\src\Traits\SanitizerTrait.php' );
-require_once ( C_CUSTOMIZER_DIR . '\src\Helpers\CustomCustomizerIncludes.php' );
+require 'vendor/autoload.php';
+
+use CCustomizer\Controllers\CustomCustomizerAdminPageInit;
+use CCustomizer\Controllers\SaveCustomSettings;
+use CCustomizer\Helpers\CustomCustomizerEnqueue;
+use CCustomizer\Controllers\CustomCustomizerBuilder;
+
+
+define('C_CUSTOMIZER_PATH', plugin_dir_path(__FILE__));
+define('C_CUSTOMIZER_VERSION', '1.2.0');
+
 
 /*
  * Register custom option on plugin activation
  * */
-function addCustomCustomizerOption ()
+function addCustomCustomizerOption()
 {
-    add_option ( 'custom_customizer_options' , [] );
+    add_option('custom_customizer_options', []);
 }
-register_activation_hook ( __FILE__ , 'addCustomCustomizerOption' );
+register_activation_hook(__FILE__, 'addCustomCustomizerOption');
+
 
 /*
  * Clean up database from custom option on plugin removal
  * */
-function removeCustomCustomizerOption ()
+function removeCustomCustomizerOption()
 {
-    delete_option ( 'custom_customizer_options' );
+    delete_option('custom_customizer_options');
 }
-register_uninstall_hook ( __FILE__ , 'removeCustomCustomizerOption' );
+register_uninstall_hook(__FILE__, 'removeCustomCustomizerOption');
 
-/*
- * Include all the necessary files
- * */
-CustomCustomizerIncludes::getInstance ();
 
-/*
- * Initiate admin page for the plugin
- * */
-CustomCustomizerAdminPageInit::getInstance ();
-
-/*
- * Enqueue scripts and styles for the admin page
- * */
-CustomCustomizerEnqueue::getInstance ();
-
-/*
- * Initiate Custom Customizer plugin
- * */
-function initiate_custom_customizer ()
-{
-    CustomCustomizerBuilder::getInstance ();
-}
-add_action ( 'plugins_loaded' , 'initiate_custom_customizer' );
+new CustomCustomizerAdminPageInit();
+new SaveCustomSettings();
+new CustomCustomizerEnqueue();
+new CustomCustomizerBuilder();
